@@ -1,0 +1,105 @@
+@import 'tailwindcss';
+@import './theme.css';
+
+@theme {
+  /* Hull — dark metallic backgrounds */
+  --color-hull-950: #06080b;
+  --color-hull-900: #0c1018;
+  --color-hull-800: #141a26;
+  --color-hull-700: #1e2738;
+  --color-hull-600: #2a3548;
+  --color-hull-500: #3a4a60;
+
+  /* Holo — cyan/blue holographic accents */
+  --color-holo-50: #e8fbff;
+  --color-holo-100: #c4f3ff;
+  --color-holo-200: #89e6ff;
+  --color-holo-300: #44d4f7;
+  --color-holo-400: #22b8e0;
+  --color-holo-500: #0e9ac0;
+  --color-holo-600: #0a7a9a;
+  --color-holo-700: #085c74;
+
+  /* Kyber — red/crystal energy */
+  --color-kyber-50: #fff0f0;
+  --color-kyber-100: #ffd6d6;
+  --color-kyber-200: #ffaaaa;
+  --color-kyber-300: #ff6b6b;
+  --color-kyber-400: #e84040;
+  --color-kyber-500: #c42020;
+  --color-kyber-600: #991818;
+  --color-kyber-700: #701212;
+
+  /* Durasteel — neutral grays for text/surfaces */
+  --color-durasteel-50: #f0f2f5;
+  --color-durasteel-100: #d8dce3;
+  --color-durasteel-200: #b8bfc9;
+  --color-durasteel-300: #8e98a6;
+  --color-durasteel-400: #6b7685;
+  --color-durasteel-500: #4d5768;
+  --color-durasteel-600: #3a4252;
+  --color-durasteel-700: #2a303d;
+
+  /* Plasma — green energy */
+  --color-plasma-400: #4ade80;
+  --color-plasma-500: #22c55e;
+  --color-plasma-600: #16a34a;
+
+  /* Aurodium — gold accents */
+  --color-aurodium-400: #f5c842;
+  --color-aurodium-500: #d4a81e;
+  --color-aurodium-600: #a68315;
+
+  /* Semantic */
+  --color-health: #c45454;
+  --color-heal: #4a9e65;
+  --color-danger: #e84040;
+  --color-success: #22c55e;
+  --color-warning: #f5c842;
+
+  --font-display: 'Orbitron', 'Arial Black', sans-serif;
+  --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* Base styles — dark by default (Star Wars aesthetic) */
+html {
+  font-family: var(--font-body);
+  color: var(--color-durasteel-100);
+  background: var(--color-hull-900);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-hull-800);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-hull-600);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-holo-500);
+}
+
+/* Selection color */
+::selection {
+  background: var(--color-holo-500);
+  color: var(--color-hull-950);
+}

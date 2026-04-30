@@ -1,0 +1,33 @@
+/* Light mode overrides (optional — Star Wars app is dark-first) */
+[data-theme="light"] {
+  --color-hull-950: #f8f9fb;
+  --color-hull-900: #f0f2f5;
+  --color-hull-800: #e4e7ec;
+  --color-hull-700: #d0d5dd;
+  --color-hull-600: #b8bfc9;
+  --color-hull-500: #8e98a6;
+
+  --color-holo-50: #063a4a;
+  --color-holo-100: #0a5c74;
+  --color-holo-200: #0e7a9a;
+  --color-holo-300: #0e9ac0;
+  --color-holo-400: #0e9ac0;
+  --color-holo-500: #22b8e0;
+  --color-holo-600: #44d4f7;
+  --color-holo-700: #89e6ff;
+
+  --color-durasteel-50: #2a303d;
+  --color-durasteel-100: #3a4252;
+  --color-durasteel-200: #4d5768;
+  --color-durasteel-300: #6b7685;
+  --color-durasteel-400: #8e98a6;
+  --color-durasteel-500: #b8bfc9;
+  --color-durasteel-600: #d8dce3;
+  --color-durasteel-700: #f0f2f5;
+
+  --color-health: #8b2d2d;
+  --color-heal: #2d6b3f;
+  --color-danger: #c42020;
+  --color-success: #16a34a;
+  --color-warning: #d4a81e;
+}
