@@ -62,13 +62,23 @@ export interface ClassData {
 
 export interface EvolutionNode {
   rankName: string
-  tier: number // rank within the evolution (I, II, III)
+  tier: number // overall tier in the tree (1, 2, 3...)
+  maxSubTier: number // how many sub-tiers within this rank (e.g. Acolyte I, II, III = 3)
   trigger: string
   abilities: string[]
   equipment: string[]
   forceSlots?: number
   specialAbility?: { name: string; description: string }
   branches?: string[] // names of branches available from this node
+  asiAtSubTiers?: number[] // which sub-tiers grant ASI (e.g. [2, 3])
+}
+
+// Tracks a single class's rank progression
+export interface ClassProgression {
+  className: ClassName
+  currentRank: string
+  currentSubTier: number // e.g. if Padawan III, this is 3
+  rankHistory: string[] // previous ranks passed through
 }
 
 export type WeaponCategory =

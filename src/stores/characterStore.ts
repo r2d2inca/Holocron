@@ -5,6 +5,7 @@ interface CharacterDraft {
   name: string
   race: Race | null
   className: ClassName | null
+  secondClassName: ClassName | null
   abilityScores: AbilityScores
   skills: string[]
   equipment: string[]
@@ -23,6 +24,7 @@ const initialDraft: CharacterDraft = {
   name: '',
   race: null,
   className: null,
+  secondClassName: null,
   abilityScores: {
     strength: 10,
     dexterity: 10,
