@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Search, X, ChevronDown, ChevronUp, Swords, Shield, Zap, Crosshair } from 'lucide-react'
 import { weapons, shields, advancedWeapons } from '@/lib/weaponData'
-import { forceAbilities, lightsaberForms, nightSisterSpells } from '@/lib/forceData'
+import { forceAbilities, lightsaberForms, nightSisterMagic } from '@/lib/forceData'
 import type { Weapon, Shield as ShieldType, AdvancedWeapon, ForceAbility, LightsaberForm, NightSisterSpell } from '@/lib/types'
 
 type CompendiumTab = 'weapons' | 'shields' | 'advanced' | 'force' | 'forms' | 'magic'
@@ -30,7 +30,7 @@ export function ArmoryLookup({ onAddWeapon, onAddAttack, onClose }: ArmoryLookup
   const filteredAdvanced = advancedWeapons.filter((a) => a.name.toLowerCase().includes(query) || a.description.toLowerCase().includes(query))
   const filteredForce = forceAbilities.filter((f) => f.name.toLowerCase().includes(query) || f.description.toLowerCase().includes(query))
   const filteredForms = lightsaberForms.filter((f) => f.name.toLowerCase().includes(query))
-  const filteredMagic = nightSisterSpells.filter((s) => s.name.toLowerCase().includes(query))
+  const filteredMagic = nightSisterMagic.filter((s: NightSisterSpell) => s.name.toLowerCase().includes(query))
 
   const weaponCategories = ['All', ...Array.from(new Set(weapons.map((w) => w.category)))]
 
@@ -164,7 +164,7 @@ export function ArmoryLookup({ onAddWeapon, onAddAttack, onClose }: ArmoryLookup
           ))}
 
           {/* NIGHT SISTER */}
-          {tab === 'magic' && filteredMagic.map((s) => (
+          {tab === 'magic' && filteredMagic.map((s: NightSisterSpell) => (
             <MagicCard key={s.name} spell={s} expanded={expandedItem === s.name} onToggle={() => setExpandedItem(expandedItem === s.name ? null : s.name)} />
           ))}
         </div>
