@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Swords, Sparkles, User, Zap, Heart, Shield, Gauge, Trash2, Coffee, Moon, Check, Eye } from 'lucide-react'
+import { Swords, Sparkles, User, Zap, Heart, Shield, Gauge, Trash2, Coffee, Moon, Check, Eye, BookOpen } from 'lucide-react'
 import { HpTracker } from './HpTracker'
 import { AbilityScores } from './AbilityScores'
 import { ForceTracker } from './ForceTracker'
@@ -16,6 +16,7 @@ import { DeathSaves } from './DeathSaves'
 import { AttacksPanel } from './AttacksPanel'
 import { HitDiceTracker } from './HitDiceTracker'
 import { classData } from '@/lib/classData'
+import { ArmoryLookup } from './ArmoryLookup'
 
 type SheetTab = 'stats' | 'combat' | 'features' | 'personality'
 
@@ -54,6 +55,7 @@ export function CharacterSheet({ character, onUpdate, onDelete }: CharacterSheet
   const [editingSpeed, setEditingSpeed] = useState(false)
   const [speedValue, setSpeedValue] = useState(character.speed)
   const [rankUpClassIndex, setRankUpClassIndex] = useState<number | null>(null)
+  const [showArmory, setShowArmory] = useState(false)
 
   const forceSlotsUsed = character.force_slots_used ?? 0
   const cls = classData.find((c) => c.name === character.class_name)
@@ -298,7 +300,7 @@ export function CharacterSheet({ character, onUpdate, onDelete }: CharacterSheet
       </div>
 
       {/* Action buttons */}
-      <div className="flex items-center gap-2 mb-6">
+      <div className="flex items-center gap-2 mb-6 flex-wrap">
         <button
           onClick={() => setRestModal('short')}
           className="flex items-center gap-1.5 bg-hull-800 border border-hull-600 hover:border-holo-500 text-durasteel-200 text-sm px-3 py-2 rounded-lg transition-colors cursor-pointer"
@@ -310,6 +312,12 @@ export function CharacterSheet({ character, onUpdate, onDelete }: CharacterSheet
           className="flex items-center gap-1.5 bg-hull-800 border border-hull-600 hover:border-holo-500 text-durasteel-200 text-sm px-3 py-2 rounded-lg transition-colors cursor-pointer"
         >
           <Moon size={14} /> Long Rest
+        </button>
+        <button
+          onClick={() => setShowArmory(true)}
+          className="flex items-center gap-1.5 bg-hull-800 border border-hull-600 hover:border-aurodium-500 text-durasteel-200 text-sm px-3 py-2 rounded-lg transition-colors cursor-pointer"
+        >
+          <BookOpen size={14} /> Armory
         </button>
         <div className="flex-1" />
         <button
@@ -468,6 +476,17 @@ export function CharacterSheet({ character, onUpdate, onDelete }: CharacterSheet
           character={character}
           classIndex={rankUpClassIndex}
           onRankUp={onUpdate}
+        />
+      )}
+
+      {/* Armory & Compendium */}
+      {showArmory && (
+        <ArmoryLookup
+          onClose={() => setShowArmory(false)}
+          onAddAttack={(attack) => {
+            const currentAttacks = character.attacks ?? []
+            onUpdate({ attacks: [...currentAttacks, attack] })
+          }}
         />
       )}
     </div>
