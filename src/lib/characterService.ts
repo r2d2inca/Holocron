@@ -10,6 +10,7 @@ interface CreateCharacterInput {
   secondClassName?: string
   abilityScores: AbilityScores
   backstory: string
+  equipment?: string[]
 }
 
 export async function createCharacter(input: CreateCharacterInput) {
@@ -77,7 +78,7 @@ export async function createCharacter(input: CreateCharacterInput) {
     racial_abilities: race.abilities,
     saving_throws: combinedSavingThrows,
     proficiencies: combinedProficiencies,
-    equipment: race.equipment,
+    equipment: [...race.equipment, ...(input.equipment ?? [])],
     backstory: input.backstory,
   }
 

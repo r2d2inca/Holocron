@@ -26,6 +26,7 @@ export function ReviewStep() {
         secondClassName: draft.secondClassName ?? undefined,
         abilityScores: draft.abilityScores,
         backstory: draft.backstory,
+        equipment: draft.equipment,
       })
       resetDraft()
       navigate('/dashboard')
@@ -85,6 +86,22 @@ export function ReviewStep() {
             ))}
           </div>
         </div>
+
+        {/* Equipment */}
+        {draft.equipment.length > 0 && (
+          <div>
+            <span className="text-durasteel-400 text-xs uppercase tracking-wider block mb-1">
+              Added Equipment
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {draft.equipment.map((item, i) => (
+                <span key={i} className="bg-hull-700 text-durasteel-300 text-xs px-2 py-1 rounded">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Backstory */}
         {draft.backstory && (

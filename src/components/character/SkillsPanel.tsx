@@ -1,28 +1,29 @@
-import { useState } from 'react'
-import { Plus, X } from 'lucide-react'
+// Full skills list matching the Remnants character sheet
+// All skills always visible with proficiency toggle and modifier display
 
-// Remnants RPG skills with their linked ability
-const SKILL_MAP: Record<string, string> = {
-  'Acrobatics': 'dexterity',
-  'Athletics': 'strength',
-  'Aura': 'charisma',
-  'Deception': 'charisma',
-  'Force': 'wisdom',
-  'Gaslighting': 'charisma',
-  'Insight': 'wisdom',
-  'Intimidation': 'charisma',
-  'Investigation': 'intelligence',
-  'Mechanics': 'intelligence',
-  'Medicine': 'intelligence',
-  'Nature': 'wisdom',
-  'Perception': 'wisdom',
-  'Performance': 'charisma',
-  'Persuasion': 'charisma',
-  'Piloting': 'dexterity',
-  'Sleight of Hand': 'dexterity',
-  'Stealth': 'dexterity',
-  'Survival': 'wisdom',
-}
+const ALL_SKILLS: { name: string; ability: string }[] = [
+  { name: 'Acrobatics', ability: 'dexterity' },
+  { name: 'Animal Handling', ability: 'wisdom' },
+  { name: 'Athletics', ability: 'strength' },
+  { name: 'Aura', ability: 'charisma' },
+  { name: 'Deception', ability: 'charisma' },
+  { name: 'Force', ability: 'wisdom' },
+  { name: 'Gaslight', ability: 'charisma' },
+  { name: 'History', ability: 'intelligence' },
+  { name: 'Insight', ability: 'wisdom' },
+  { name: 'Intimidation', ability: 'charisma' },
+  { name: 'Investigation', ability: 'intelligence' },
+  { name: 'Medicine', ability: 'intelligence' },
+  { name: 'Nature', ability: 'wisdom' },
+  { name: 'Perception', ability: 'wisdom' },
+  { name: 'Performance', ability: 'charisma' },
+  { name: 'Persuasion', ability: 'charisma' },
+  { name: 'Piloting', ability: 'dexterity' },
+  { name: 'Religion', ability: 'intelligence' },
+  { name: 'Sleight of Hand', ability: 'dexterity' },
+  { name: 'Stealth', ability: 'dexterity' },
+  { name: 'Survival', ability: 'wisdom' },
+]
 
 interface SkillsPanelProps {
   character: any
@@ -30,78 +31,58 @@ interface SkillsPanelProps {
 }
 
 export function SkillsPanel({ character, onUpdate }: SkillsPanelProps) {
-  const [showAdd, setShowAdd] = useState(false)
-  const skills: string[] = character.skills ?? []
+  const proficientSkills: string[] = character.skills ?? []
+
+  function toggleSkill(skillName: string) {
+    if (proficientSkills.includes(skillName)) {
+      onUpdate({ skills: proficientSkills.filter((s) => s !== skillName) })
+    } else {
+      onUpdate({ skills: [...proficientSkills, skillName] })
+    }
+  }
 
   function getModifier(ability: string): number {
-    return Math.floor((character[ability] - 10) / 2)
+    return Math.floor(((character[ability] ?? 10) - 10) / 2)
   }
 
   function formatMod(mod: number): string {
     return mod >= 0 ? `+${mod}` : `${mod}`
   }
 
-  function removeSkill(skill: string) {
-    onUpdate({ skills: skills.filter((s) => s !== skill) })
-  }
-
-  function addSkill(skill: string) {
-    if (skills.includes(skill)) return
-    onUpdate({ skills: [...skills, skill] })
-    setShowAdd(false)
-  }
-
-  const availableSkills = Object.keys(SKILL_MAP).filter((s) => !skills.includes(s))
-
   return (
     <div className="bg-hull-800 border border-hull-600 rounded-lg p-4">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-xs text-durasteel-400 uppercase tracking-wider">Skills</h3>
-        <button
-          onClick={() => setShowAdd(!showAdd)}
-          className="text-durasteel-500 hover:text-holo-400 transition-colors cursor-pointer"
-        >
-          <Plus size={14} />
-        </button>
-      </div>
-
-      {showAdd && (
-        <div className="mb-3 max-h-40 overflow-y-auto bg-hull-900 border border-hull-600 rounded p-2 space-y-1">
-          {availableSkills.map((skill) => (
+      <h3 className="text-xs text-durasteel-400 uppercase tracking-wider mb-3">Skills</h3>
+      <div className="space-y-0.5">
+        {ALL_SKILLS.map(({ name, ability }) => {
+          const isProficient = proficientSkills.includes(name)
+          const mod = getModifier(ability)
+          return (
             <button
-              key={skill}
-              onClick={() => addSkill(skill)}
-              className="block w-full text-left text-xs text-durasteel-300 hover:text-holo-400 hover:bg-hull-700 px-2 py-1 rounded transition-colors cursor-pointer"
+              key={name}
+              onClick={() => toggleSkill(name)}
+              className="flex items-center gap-2 w-full text-left py-1.5 px-1 rounded hover:bg-hull-700/50 transition-colors cursor-pointer group"
             >
-              {skill} <span className="text-durasteel-500">({SKILL_MAP[skill].slice(0, 3).toUpperCase()})</span>
-            </button>
-          ))}
-        </div>
-      )}
-
-      <div className="space-y-1">
-        {skills.length > 0 ? (
-          skills.sort().map((skill) => {
-            const ability = SKILL_MAP[skill] || 'wisdom'
-            const mod = getModifier(ability)
-            return (
-              <div key={skill} className="flex items-center gap-2 text-sm py-1 group">
-                <div className="w-2 h-2 rounded-full bg-holo-400" />
-                <span className="text-durasteel-200 flex-1">{skill}</span>
-                <span className="text-xs text-durasteel-500">{ability.slice(0, 3).toUpperCase()}</span>
-                <span className="font-mono text-durasteel-100 w-8 text-right">{formatMod(mod)}</span>
-                <button
-                  onClick={() => removeSkill(skill)}
-                  className="text-durasteel-500 hover:text-kyber-400 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
-                >
-                  <X size={12} />
-                </button>
+              <div
+                className={`w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center transition-colors ${
+                  isProficient
+                    ? 'border-holo-400 bg-holo-400'
+                    : 'border-durasteel-600 group-hover:border-durasteel-400'
+                }`}
+              >
+                {isProficient && (
+                  <div className="w-1.5 h-1.5 rounded-full bg-hull-900" />
+                )}
               </div>
-            )
-          })
-        ) : (
-          <p className="text-durasteel-500 text-sm">No skills selected</p>
-        )}
+              <span className={`text-sm flex-1 ${isProficient ? 'text-durasteel-100' : 'text-durasteel-400'}`}>
+                {name}
+              </span>
+              <span className="text-xs text-durasteel-500 w-8">{ability.slice(0, 3).toUpperCase()}</span>
+              <span className={`font-mono text-sm w-7 text-right ${isProficient ? 'text-holo-400' : 'text-durasteel-300'}`}>
+                {formatMod(mod)}
+              </span>
+            </button>
+          )
+        })}
       </div>
     </div>
   )

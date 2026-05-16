@@ -33,6 +33,8 @@ export function RestModal({ type, character, onConfirm, onClose }: RestModalProp
                 <li>Restore HP to maximum ({character.max_hp})</li>
                 <li>Remove all temporary HP</li>
                 <li>Restore all Force slots</li>
+                <li>Restore all Hit Dice</li>
+                <li>Reset death saves</li>
                 <li>Reset all ability cooldowns</li>
                 <li>Reset lightsaber form cooldowns</li>
               </ul>
