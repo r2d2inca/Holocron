@@ -88,15 +88,15 @@ export function ArmoryLookup({ onAddWeapon, onAddAttack, onClose }: ArmoryLookup
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-1 px-4 pt-2 overflow-x-auto">
+        <div className="flex items-center gap-2 px-4 pt-3 pb-2 overflow-x-auto border-b border-hull-700">
           {TABS.map((t) => (
             <button
               key={t.id}
               onClick={() => { setTab(t.id); setCategoryFilter('All') }}
-              className={`flex items-center gap-1 px-3 py-1.5 text-xs rounded-t transition-colors cursor-pointer whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-3 py-2 text-xs rounded-lg transition-colors cursor-pointer whitespace-nowrap ${
                 tab === t.id
-                  ? 'bg-hull-700 text-holo-400'
-                  : 'text-durasteel-500 hover:text-durasteel-300'
+                  ? 'bg-holo-500/15 text-holo-400 border border-holo-500/30'
+                  : 'text-durasteel-500 hover:text-durasteel-300 hover:bg-hull-700'
               }`}
             >
               {t.icon} {t.label} <span className="text-durasteel-600">({t.count})</span>
@@ -106,15 +106,15 @@ export function ArmoryLookup({ onAddWeapon, onAddAttack, onClose }: ArmoryLookup
 
         {/* Category filter for weapons */}
         {tab === 'weapons' && (
-          <div className="flex items-center gap-1 px-4 py-2 overflow-x-auto">
+          <div className="flex items-center gap-2 px-4 py-3 overflow-x-auto border-b border-hull-700">
             {weaponCategories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setCategoryFilter(cat)}
-                className={`text-xs px-2 py-1 rounded transition-colors cursor-pointer whitespace-nowrap ${
+                className={`text-xs px-3 py-1.5 rounded-lg transition-colors cursor-pointer whitespace-nowrap ${
                   categoryFilter === cat
-                    ? 'bg-holo-500/20 text-holo-400'
-                    : 'text-durasteel-500 hover:text-durasteel-300'
+                    ? 'bg-holo-500/20 text-holo-400 border border-holo-500/30'
+                    : 'text-durasteel-500 hover:text-durasteel-300 hover:bg-hull-700'
                 }`}
               >
                 {cat}
